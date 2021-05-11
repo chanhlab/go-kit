@@ -1,0 +1,28 @@
+{
+    "version": "0.1",
+    "words": [
+        "chanhteam",
+        "deadcode",
+        "dupl",
+        "errcheck",
+        "gocritic",
+        "gocyclo",
+        "gofmt",
+        "golint",
+        "gorm",
+        "gormzap",
+        "gosec",
+        "gosimple",
+        "govet",
+        "moul",
+        "protobuf",
+        "ptypes",
+        "staticcheck",
+        "stretchr",
+        "structcheck",
+        "typecheck",
+        "unparam",
+        "varcheck",
+        "zapgorm"
+    ]
+}
