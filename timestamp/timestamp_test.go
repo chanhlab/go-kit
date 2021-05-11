@@ -12,9 +12,9 @@ func TestTimeToTimestampProto(t *testing.T) {
 	currentTime := time.Now()
 	expected, _ := ptypes.TimestampProto(currentTime)
 
-	assert.Equal(t, expected, TimeToTimestampProto(currentTime))
+	assert.Equal(t, expected, TimeToProtoTimestamp(currentTime))
 }
 
 func TestTimestampProtoNow(t *testing.T) {
-	assert.NotEmpty(t, TimestampProtoNow())
+	assert.NotEmpty(t, ProtoTimestampNow())
 }

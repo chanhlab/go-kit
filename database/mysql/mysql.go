@@ -7,11 +7,11 @@ import (
 
 	"github.com/chanhteam/go-utils/logger"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 
 	// Register some standard stuff
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	gormzap "github.com/wantedly/gorm-zap"
+	"gorm.io/driver/mysql"
+	gormzap "moul.io/zapgorm2"
 )
 
 var (
@@ -25,14 +25,18 @@ var (
 // Init initialize mysql connection
 func Init(host string, database string, username string, password string, maxIdleConnection int, maxOpenConnection int) {
 	strConnect := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, database)
-	connect, err := gorm.Open("mysql", strConnect)
+	logger := gormzap.New(logger.Log)
+	logger.SetAsDefault()
+	connect, err := gorm.Open(mysql.Open(strConnect), &gorm.Config{Logger: logger})
+	if err != nil {
+		return
+	}
 
+	sqlDB, err := connect.DB()
 	if err == nil {
-		connect.LogMode(false)
-		connect.SetLogger(gormzap.New(logger.Log))
-		connect.DB().SetConnMaxLifetime(time.Hour)
-		connect.DB().SetMaxOpenConns(maxOpenConnection)
-		connect.DB().SetMaxIdleConns(maxIdleConnection)
+		sqlDB.SetConnMaxLifetime(time.Hour)
+		sqlDB.SetMaxOpenConns(maxOpenConnection)
+		sqlDB.SetMaxIdleConns(maxIdleConnection)
 	}
 }
 
