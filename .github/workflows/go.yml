@@ -35,13 +35,13 @@ jobs:
     name: Run Unit Tests
     services:
       mysql:
-        image: mysql:latest
+        image: mysql:5.7
         env:
           MYSQL_DATABASE: db_service
           MYSQL_USER: root
           MYSQL_PASSWORD: 123456
         ports:
-          - 3306:3306
+          - 3306
         options: >-
           --health-cmd "mysqladmin ping -uroot -p123456"
           --health-interval 10s
