@@ -31,7 +31,6 @@ jobs:
           make lint
 
   unit-test:
-    needs: sqlite
     runs-on: ubuntu-latest
     name: Run Unit Tests
     services:
