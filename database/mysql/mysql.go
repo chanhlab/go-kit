@@ -27,17 +27,18 @@ func Init(host string, database string, username string, password string, maxIdl
 	strConnect := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, database)
 	logger := gormzap.New(logger.Log)
 	logger.SetAsDefault()
-	connect, err := gorm.Open(mysql.Open(strConnect), &gorm.Config{Logger: logger})
+	db, err := gorm.Open(mysql.Open(strConnect), &gorm.Config{Logger: logger})
 	if err != nil {
 		return
 	}
 
-	sqlDB, err := connect.DB()
+	sqlDB, err := db.DB()
 	if err == nil {
 		sqlDB.SetConnMaxLifetime(time.Hour)
 		sqlDB.SetMaxOpenConns(maxOpenConnection)
 		sqlDB.SetMaxIdleConns(maxIdleConnection)
 	}
+	connect = db
 }
 
 // GetConnection gets a MySQL connection
