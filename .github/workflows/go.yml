@@ -40,15 +40,14 @@ jobs:
           MYSQL_DATABASE: db_service
           MYSQL_USER: root
           MYSQL_PASSWORD: 123456
+          MYSQL_RANDOM_ROOT_PASSWORD: "yes"
         ports:
           - 3306
-        options: >-
-          --health-cmd "mysqladmin ping -uroot -p123456"
-          --health-interval 10s
-          --health-start-period 10s
-          --health-timeout 5s
-          --health-retries 10
     steps:
+      - name: Set up MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
       - name: Install Go
         uses: actions/setup-go@v2
         with:
