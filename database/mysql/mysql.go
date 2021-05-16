@@ -23,8 +23,8 @@ var (
 )
 
 // Init initialize mysql connection
-func Init(host string, database string, username string, password string, maxIdleConnection int, maxOpenConnection int) {
-	strConnect := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, database)
+func Init(host string, port int, database string, username string, password string, maxIdleConnection int, maxOpenConnection int) {
+	strConnect := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, database)
 	logger := gormzap.New(logger.Log)
 	logger.SetAsDefault()
 	db, err := gorm.Open(mysql.Open(strConnect), &gorm.Config{Logger: logger})
@@ -42,9 +42,9 @@ func Init(host string, database string, username string, password string, maxIdl
 }
 
 // GetConnection gets a MySQL connection
-func GetConnection(host string, database string, username string, password string, maxIdleConnection int, maxOpenConnection int) *gorm.DB {
+func GetConnection(host string, port int, database string, username string, password string, maxIdleConnection int, maxOpenConnection int) *gorm.DB {
 	onceInit.Do(func() {
-		Init(host, database, username, password, maxIdleConnection, maxOpenConnection)
+		Init(host, port, database, username, password, maxIdleConnection, maxOpenConnection)
 	})
 	return connect
 }

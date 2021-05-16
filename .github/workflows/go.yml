@@ -38,13 +38,13 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_DATABASE: db_service
-          MYSQL_USER: root
-          MYSQL_PASSWORD: 123456
+          MYSQL_USER: go_service
+          MYSQL_PASSWORD: go_service
           MYSQL_RANDOM_ROOT_PASSWORD: "yes"
         ports:
-          - 3306/tcp
+          - 9910:3306
         options: >-
-          --health-cmd "mysqladmin ping -uroot -p123456"
+          --health-cmd "mysqladmin ping -ugo_service -pgo_service"
           --health-interval 10s
           --health-start-period 10s
           --health-timeout 5s
