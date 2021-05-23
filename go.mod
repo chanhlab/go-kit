@@ -1,4 +1,4 @@
-module github.com/chanhteam/go-utils
+module github.com/chanhlab/go-utils
 
 go 1.15
 

@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/chanhteam/go-utils/logger"
+	"github.com/chanhlab/go-utils/logger"
 
 	"gorm.io/gorm"
 
