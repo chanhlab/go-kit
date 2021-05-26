@@ -27,8 +27,9 @@ func Init(host string, port int, database string, username string, password stri
 	strConnect := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, database)
 	logger := gormzap.New(logger.Log)
 	logger.SetAsDefault()
-	db, err := gorm.Open(mysql.Open(strConnect), &gorm.Config{Logger: logger})
-	if err != nil {
+	db, _ := gorm.Open(mysql.Open(strConnect), &gorm.Config{Logger: logger})
+
+	if db == nil {
 		return
 	}
 
