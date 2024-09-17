@@ -17,18 +17,18 @@ jobs:
     name: Run Linter
     steps:
       - name: Install Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: 1.23.x
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install golangci-lint
-        run: |
-          go get github.com/golangci/golangci-lint/cmd/golangci-lint
-      - name: Run linters
-        run: |
-          export PATH=$PATH:$(go env GOPATH)/bin
-          make lint
+        uses: actions/checkout@v4
+      - name: lint
+        uses: golangci/golangci-lint-action@v4.0.0
+        with:
+          version: latest
+          # skip cache because of flaky behaviors
+          skip-build-cache: true
+          skip-pkg-cache: true
 
   unit-test:
     runs-on: ubuntu-latest
@@ -51,11 +51,11 @@ jobs:
           --health-retries 10
     steps:
       - name: Install Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: 1.23.x
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Run tests
         run: make test
       - name: Upload coverage report
@@ -70,9 +70,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: 1.23
       - name: Build
