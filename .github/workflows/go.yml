@@ -19,7 +19,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.15.x
+          go-version: 1.23.x
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install golangci-lint
@@ -35,14 +35,14 @@ jobs:
     name: Run Unit Tests
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         env:
           MYSQL_DATABASE: db_service
           MYSQL_USER: go_service
           MYSQL_PASSWORD: go_service
           MYSQL_RANDOM_ROOT_PASSWORD: "yes"
         ports:
-          - 9910:3306
+          - 3306:3306
         options: >-
           --health-cmd "mysqladmin ping -ugo_service -pgo_service"
           --health-interval 10s
@@ -53,7 +53,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.15.x
+          go-version: 1.23.x
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run tests
@@ -74,6 +74,6 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.15
+          go-version: 1.23
       - name: Build
         run: go build -v ./...
