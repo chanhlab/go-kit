@@ -3,17 +3,15 @@ package timestamp
 import (
 	"time"
 
-	"github.com/golang/protobuf/ptypes"
-	"github.com/golang/protobuf/ptypes/timestamp"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // TimeToProtoTimestamp converts from time.Time to Protobuf Timestamp
-func TimeToProtoTimestamp(time time.Time) *timestamp.Timestamp {
-	timestampProto, _ := ptypes.TimestampProto(time)
-	return timestampProto
+func TimeToProtoTimestamp(time time.Time) *timestamppb.Timestamp {
+	return timestamppb.New(time)
 }
 
 // ProtoProtoTimestampNow gets the current Protobuf Timestamp
-func ProtoTimestampNow() *timestamp.Timestamp {
-	return ptypes.TimestampNow()
+func ProtoTimestampNow() *timestamppb.Timestamp {
+	return timestamppb.Now()
 }
