@@ -1,4 +1,4 @@
-package mysql
+package postgres
 
 import (
 	"testing"
@@ -10,7 +10,7 @@ import (
 
 func TestGetConnectionShouldReturnNil(t *testing.T) {
 	logger.NewDefault()
-	db, err := NewConnection("localhost", 9910, "db_service", "go_service", "go_service", 10, 10, time.Hour)
+	db, err := NewConnection("localhost", 5432, "db_service", "go_service", "go_service", 10, 10, time.Hour)
 	assert.Nil(t, db)
 	assert.NotNil(t, err)
 }
