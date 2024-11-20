@@ -1,16 +1,18 @@
 package logger
 
 import (
+	"context"
 	"os"
 	"sync"
 	"time"
 
+	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
 var (
-	// Log is global logger
+	// logger is global logger
 	Log *zap.Logger
 
 	// timeFormat is custom Time format
@@ -29,7 +31,7 @@ func customTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 // Init initializes log by input parameters
 // lvl - global log level: Debug(-1), Info(0), Warn(1), Error(2), DPanic(3), Panic(4), Fatal(5)
 // timeFormat - custom time format for logger of empty string to use default
-func Init(lvl int, timeFormat string) {
+func Init(lvl int8, timeFormat string) {
 	onceInit.Do(func() {
 		// First, define our level-handling logic.
 		globalLevel := zapcore.Level(lvl)
@@ -50,13 +52,13 @@ func Init(lvl int, timeFormat string) {
 
 		// Configure console output.
 		var useCustomTimeFormat bool
-		ecfg := zap.NewProductionEncoderConfig()
-		if len(timeFormat) > 0 {
+		encoderConfig := zap.NewProductionEncoderConfig()
+		if timeFormat != "" {
 			customTimeFormat = timeFormat
-			ecfg.EncodeTime = customTimeEncoder
+			encoderConfig.EncodeTime = customTimeEncoder
 			useCustomTimeFormat = true
 		}
-		consoleEncoder := zapcore.NewJSONEncoder(ecfg)
+		consoleEncoder := zapcore.NewJSONEncoder(encoderConfig)
 
 		// Join the outputs, encoders, and level-handling functions into
 		// zapcore.
@@ -78,4 +80,14 @@ func Init(lvl int, timeFormat string) {
 // NewDefault create a default logger
 func NewDefault() {
 	Init(2, "2006-01-02T15:04:05Z07:00")
+}
+
+func WithTracerContext(ctx context.Context, logger *zap.Logger) *zap.Logger {
+	if span := trace.SpanFromContext(ctx); span != nil {
+		logger.With(
+			zap.String("trace_id", span.SpanContext().TraceID().String()),
+			zap.String("span_id", span.SpanContext().SpanID().String()),
+		)
+	}
+	return logger
 }

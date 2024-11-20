@@ -4,13 +4,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang/protobuf/ptypes"
 	"github.com/stretchr/testify/assert"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func TestTimeToTimestampProto(t *testing.T) {
 	currentTime := time.Now()
-	expected, _ := ptypes.TimestampProto(currentTime)
+	expected := timestamppb.New(currentTime)
 
 	assert.Equal(t, expected, TimeToProtoTimestamp(currentTime))
 }

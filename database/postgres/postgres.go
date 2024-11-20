@@ -1,16 +1,16 @@
-package mysql
+package postgres
 
 import (
 	"fmt"
 	"time"
 
 	"github.com/chanhlab/go-utils/logger"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	gormzap "moul.io/zapgorm2"
 )
 
-// NewConnection create new mysql db connection
+// NewConnection create new postgres db connection
 func NewConnection(
 	host string, port int, database string,
 	username string, password string,
@@ -28,7 +28,7 @@ func NewConnection(
 		config.Logger = logger
 	}
 
-	db, err := gorm.Open(mysql.Open(connectionStr), config)
+	db, err := gorm.Open(postgres.Open(connectionStr), config)
 	if err != nil {
 		return nil, err
 	}

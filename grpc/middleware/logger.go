@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/chanhlab/go-utils/logger"
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	"go.uber.org/zap"
@@ -37,13 +36,13 @@ func AddLogging(logger *zap.Logger, options []grpc.ServerOption) []grpc.ServerOp
 	grpc_zap.ReplaceGrpcLogger(logger)
 
 	// Add unary interceptor
-	options = append(options, grpc_middleware.WithUnaryServerChain(
+	options = append(options, grpc.ChainUnaryInterceptor(
 		grpc_ctxtags.UnaryServerInterceptor(grpc_ctxtags.WithFieldExtractor(grpc_ctxtags.CodeGenRequestFieldExtractor)),
 		grpc_zap.UnaryServerInterceptor(logger, zapOptions...),
 	))
 
 	// Add stream interceptor (added as an example here)
-	options = append(options, grpc_middleware.WithStreamServerChain(
+	options = append(options, grpc.ChainStreamInterceptor(
 		grpc_ctxtags.StreamServerInterceptor(grpc_ctxtags.WithFieldExtractor(grpc_ctxtags.CodeGenRequestFieldExtractor)),
 		grpc_zap.StreamServerInterceptor(logger, zapOptions...),
 	))

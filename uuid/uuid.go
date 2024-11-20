@@ -1,8 +1,8 @@
 package uuid
 
-import "github.com/lithammer/shortuuid/v3"
+import "github.com/lithammer/shortuuid/v4"
 
-// NewUUID generates new UUID
-func NewUUID() string {
+// ShortUUID generates new UUID
+func ShortUUID() string {
 	return shortuuid.New()
 }
