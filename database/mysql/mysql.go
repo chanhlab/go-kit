@@ -16,7 +16,10 @@ func NewConnection(
 	username string, password string,
 	maxIdleConnection int, maxOpenConnection int, connMaxLifetime time.Duration,
 ) (*gorm.DB, error) {
-	connectionStr := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, database)
+	connectionStr := fmt.Sprintf(
+		"%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
+		username, password, host, port, database,
+	)
 
 	config := &gorm.Config{}
 	if logger.Log != nil {
