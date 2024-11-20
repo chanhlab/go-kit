@@ -31,7 +31,7 @@ func customTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 // Init initializes log by input parameters
 // lvl - global log level: Debug(-1), Info(0), Warn(1), Error(2), DPanic(3), Panic(4), Fatal(5)
 // timeFormat - custom time format for logger of empty string to use default
-func Init(lvl int, timeFormat string) {
+func Init(lvl int8, timeFormat string) {
 	onceInit.Do(func() {
 		// First, define our level-handling logic.
 		globalLevel := zapcore.Level(lvl)
