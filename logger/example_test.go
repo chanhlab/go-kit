@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestLogger(t *testing.T) {
+func TestLogger(_ *testing.T) {
 	NewDefault()
 	ctx := context.Background()
 	ctx.Value("test")
