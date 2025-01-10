@@ -1,4 +1,4 @@
-module github.com/chanhlab/go-utils
+module github.com/chanhlab/go-kit
 
 go 1.23
 
