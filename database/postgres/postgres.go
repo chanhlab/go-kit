@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/chanhlab/go-utils/logger"
+	"github.com/chanhlab/go-kit/logger"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	gormzap "moul.io/zapgorm2"

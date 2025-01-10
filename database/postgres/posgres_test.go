@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/chanhlab/go-utils/logger"
+	"github.com/chanhlab/go-kit/logger"
 	"github.com/stretchr/testify/assert"
 )
 

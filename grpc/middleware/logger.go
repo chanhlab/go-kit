@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/chanhlab/go-utils/logger"
+	"github.com/chanhlab/go-kit/logger"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	"go.uber.org/zap"
