@@ -42,6 +42,7 @@ var reqID uint64
 // process that is rebooted a handful of times a day for a hundred years has less
 // than a millionth of a percent chance of generating two colliding IDs.
 
+// nolint: gochecknoinits
 func init() {
 	hostname, err := os.Hostname()
 	if hostname == "" || err != nil {
