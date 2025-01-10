@@ -13,7 +13,6 @@ var (
 )
 
 // init Initializes constant part of request ID
-//nolint: gochecknoinits
 func init() {
 	grpcGatewayTag = &opentracing.Tag{Key: string(ext.Component), Value: "grpc-gateway"}
 }
